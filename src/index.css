@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-gray-200;
+  }
+  body {
+    @apply bg-gray-50 text-gray-900;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-to-r from-orange-300 to-orange-500 text-white font-medium py-2 px-4 rounded-lg hover:from-orange-400 hover:to-orange-600 transition-all duration-200 shadow-md hover:shadow-lg;
+  }
+  
+  .btn-secondary {
+    @apply bg-white border border-orange-300 text-orange-600 font-medium py-2 px-4 rounded-lg hover:bg-orange-50 transition-all duration-200;
+  }
+  
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-200;
+  }
+  
+  .input-field {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent;
+  }
+  
+  .table-row-hover {
+    @apply hover:bg-orange-50 transition-colors duration-150;
+  }
+}
+
+@layer utilities {
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+}
+/* 
+.autocomplete-wrapper {
+  width: 260px;
+  position: relative;
+}
+
+.autocomplete-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #777;
+  border-radius: 4px;
+}
+
+.autocomplete-list {
+  position: absolute;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #ccc;
+  top: 40px;
+  border-radius: 4px;
+  max-height: 170px;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.autocomplete-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.autocomplete-item:hover {
+  background: #f3f3f3;
+} */
