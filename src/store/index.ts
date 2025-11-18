@@ -12,6 +12,7 @@ import restaurantSlice from './slices/restaurantSlice';
 import qrCodesSlice from './slices/qrCodesSlice';
 import loyaltySlice from './slices/loyaltySlice';
 import stateSlice from './slices/stateSlice';
+import expensesSlice from './slices/expensesSlice';
 
 // Persist configuration
 const persistConfig: PersistConfig<any> = {
@@ -27,7 +28,8 @@ const persistConfig: PersistConfig<any> = {
     'restaurant',
     'qrCodes',
     'loyalty',
-    'states'
+    'states',
+    'expenses'
   ],
   blacklist: [], // Add any slices you don't want to persist
   debug: process.env.NODE_ENV === 'development', // Enable debug logs in development
@@ -49,7 +51,8 @@ const persistedReducer = persistReducer(persistConfig, combineReducers({
   restaurant: restaurantSlice,
   qrCodes: qrCodesSlice,
   loyalty: loyaltySlice,
-  states:stateSlice
+  states: stateSlice,
+  expenses: expensesSlice
 }));
 
 export const store = configureStore({

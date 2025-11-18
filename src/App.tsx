@@ -15,6 +15,8 @@ import OrdersList from './pages/Orders/OrdersList';
 import OrderDetails from './pages/Orders/OrderDetails';
 import CreateOrder from './pages/Orders/CreateOrder';
 import Reports from './pages/Reports';
+import Expenses from './pages/Expenses';
+import ProfitLoss from './pages/ProfitLoss';
 import LoyaltyManagement from './pages/LoyaltyManagement';
 import Users from './pages/Users';
 import Profile from './pages/Profile';
@@ -108,9 +110,19 @@ const AppContent: React.FC = () => {
               <CreateOrder />
             </ProtectedRoute>
           } />
+          <Route path="/expenses" element={
+            <ProtectedRoute page="expenses">
+              <Expenses />
+            </ProtectedRoute>
+          } />
           <Route path="/reports" element={
             <ProtectedRoute page="reports">
               <Reports />
+            </ProtectedRoute>
+          } />
+          <Route path="/reports/profit-loss" element={
+            <ProtectedRoute page="reports">
+              <ProfitLoss />
             </ProtectedRoute>
           } />
           <Route path="/loyalty" element={

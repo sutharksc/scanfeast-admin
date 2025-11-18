@@ -20,7 +20,8 @@ import {
   SearchIcon,
   RestaurantIcon,
   TagIcon,
-  TrophyIcon
+  TrophyIcon,
+  BanknotesIcon
 } from '../../components/ui/Icons';
 import NotificationsDropdown from '../../components/ui/Notifications';
 
@@ -45,6 +46,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     { name: 'Menu Items', href: '/menu-items', icon: ShoppingCartIcon, page: 'menu-items' },
     { name: 'Orders', href: '/orders', icon: ShoppingCartIcon, page: 'orders' },
     { name: 'Create Order', href: '/create-order', icon: PlusCircleIcon, page: 'orders', action: 'create' as const },
+    { name: 'Expenses', href: '/expenses', icon: BanknotesIcon, page: 'expenses' },
     { name: 'Coupons', href: '/coupons', icon: TagIcon, page: 'reports' },
     { name: 'Loyalty', href: '/loyalty', icon: TrophyIcon, page: 'loyalty' },
     { name: 'Reports', href: '/reports', icon: ChartBarIcon, page: 'reports' },

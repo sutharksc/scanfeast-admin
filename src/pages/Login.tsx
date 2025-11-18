@@ -1,24 +1,31 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
+import {
+  GoogleLogin,
+  useGoogleLogin,
+  useGoogleOneTapLogin,
+} from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
+import { loginWithGoogleAsync } from "../store/slices/authSlice";
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
-  const [forgotEmail, setForgotEmail] = useState('');
-  
-  const { login, loading, error, clearError } = useAuth();
+  const [forgotEmail, setForgotEmail] = useState("");
+
+  const { login, loading, loginWithGoogle,error, clearError } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     clearError();
-    
+
     try {
       await login(email, password);
-      navigate('/dashboard');
+      navigate("/dashboard");
     } catch (error) {
       // Error is handled by the auth hook
     }
@@ -29,8 +36,18 @@ const Login: React.FC = () => {
     // Mock forgot password functionality
     alert(`Password reset link sent to ${forgotEmail}`);
     setShowForgotPassword(false);
-    setForgotEmail('');
+    setForgotEmail("");
   };
+
+  const googleSignIn = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      console.log("Token Response:", tokenResponse);
+      await loginWithGoogle(tokenResponse.access_token)
+      debugger
+      navigate("/dashboard");
+    },
+    onError: () => console.log("Login Failed"),
+  });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -46,7 +63,7 @@ const Login: React.FC = () => {
             Use your credentials to access the admin panel
           </p>
         </div>
-        
+
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
@@ -93,7 +110,10 @@ const Login: React.FC = () => {
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
               />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+              <label
+                htmlFor="remember-me"
+                className="ml-2 block text-sm text-gray-900"
+              >
                 Remember me
               </label>
             </div>
@@ -121,15 +141,22 @@ const Login: React.FC = () => {
               disabled={loading}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50"
             >
-              {loading ? 'Signing in...' : 'Sign in'}
+              {loading ? "Signing in..." : "Sign in"}
             </button>
-          </div>
-
-          <div className="text-center text-sm text-gray-600">
-            <p>Demo credentials:</p>
-            <p>Super Admin: super@admin.com / admin123</p>
-            <p>Admin: admin@admin.com / admin123</p>
-            <p>User: user@admin.com / admin123</p>
+            <div className="mt-2">
+              <button
+                onClick={() => googleSignIn()}
+                type="button"
+                className="group relative w-full flex justify-center items-center gap-3 py-2 px-4 border border-gray-300 text-sm font-medium rounded-md text-gray-800 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50"
+              >
+                <img
+                  src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                  alt="Google Logo"
+                  className="w-5 h-5"
+                />
+                Continue with Google
+              </button>
+            </div>
           </div>
         </form>
       </div>
@@ -162,7 +189,7 @@ const Login: React.FC = () => {
                     className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
                     onClick={() => {
                       setShowForgotPassword(false);
-                      setForgotEmail('');
+                      setForgotEmail("");
                     }}
                   >
                     Cancel

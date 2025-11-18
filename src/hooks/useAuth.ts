@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../store';
-import { loginAsync, logoutAsync, clearError, checkAuth } from '../store/slices/authSlice';
+import { loginAsync, logoutAsync, clearError, checkAuth, loginWithGoogleAsync } from '../store/slices/authSlice';
 
 export const useAuth = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -9,6 +9,17 @@ export const useAuth = () => {
   const login = async (phone: string, password: string) => {
     try {
       const result = await dispatch(loginAsync({ phone, password }) as any);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const loginWithGoogle = async (accessToken: string) => {
+    try {
+      debugger
+      const result = await dispatch(loginWithGoogleAsync(accessToken) as any);
+      debugger
       return result;
     } catch (error) {
       throw error;
@@ -59,5 +70,6 @@ export const useAuth = () => {
     clearError: clearAuthError,
     checkAuth: checkAuthentication,
     hasPermission,
+    loginWithGoogle
   };
 };

@@ -43,6 +43,20 @@ export const loginAsync = createAsyncThunk(
   }
 );
 
+export const loginWithGoogleAsync = createAsyncThunk(
+  "auth/login",
+  async (accessToken:string, { rejectWithValue }) => {
+    try {debugger;
+      const response = await authService.loginWithGoogle(accessToken);
+      const { user, token } = response.data;
+      localStorage.setItem("auth", JSON.stringify({ user, token }));
+      return { user, token };
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.error?.description || "Login failed");
+    }
+  }
+);
+
 //
 // 🔹 Logout user
 //

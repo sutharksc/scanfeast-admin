@@ -340,3 +340,78 @@ export interface SelectListItem{
   text:string;
   value:string;
 }
+
+// Expense Types
+export type ExpenseType = 
+  | 'purchases'
+  | 'staff_salary'
+  | 'maintenance'
+  | 'utilities'
+  | 'rent'
+  | 'marketing'
+  | 'insurance'
+  | 'taxes'
+  | 'supplies'
+  | 'equipment'
+  | 'delivery'
+  | 'other';
+
+export interface Expense {
+  id: string;
+  type: ExpenseType;
+  amount: number;
+  date: string;
+  description: string;
+  notes?: string;
+  attachment?: string;
+  createdAt: string;
+  updatedAt: string;
+  createdBy: string;
+}
+
+export interface CreateExpenseRequest {
+  type: ExpenseType;
+  amount: number;
+  date: string;
+  description: string;
+  notes?: string;
+  attachment?: string;
+}
+
+export interface UpdateExpenseRequest extends Partial<CreateExpenseRequest> {
+  id: string;
+}
+
+export interface ExpenseFilters {
+  startDate?: string;
+  endDate?: string;
+  type?: ExpenseType;
+  minAmount?: number;
+  maxAmount?: number;
+  search?: string;
+}
+
+// Profit & Loss Types
+export interface ProfitLossData {
+  totalSales: number;
+  totalExpenses: number;
+  profitOrLoss: number;
+  profitMargin: number;
+  expensesByType: Array<{
+    type: ExpenseType;
+    amount: number;
+    percentage: number;
+  }>;
+  monthlyData: Array<{
+    month: string;
+    sales: number;
+    expenses: number;
+    profitOrLoss: number;
+  }>;
+}
+
+export interface ProfitLossFilters {
+  startDate: string;
+  endDate: string;
+  groupBy: 'daily' | 'weekly' | 'monthly' | 'yearly';
+}
